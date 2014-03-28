@@ -1,27 +1,27 @@
 public class Solution {
-    public int numDistinct(String S, String T) {
-        if (T.length() == 0) {
-            return 1;
-        } else if (S.length() == 0) {
-            return 0;
-        }
-
-        int[][] f = new int[S.length()][T.length()];
-        f[0][0] = (S.charAt(0) == T.charAt(0)) ? 1 : 0;
-
-        for (int i = 1; i < S.length(); i++) {
-            for (int j = 0; j <= Math.min(T.length() - 1, i); j++) {
-                f[i][j] = f[i - 1][j];
-                if (S.charAt(i) == T.charAt(j)) {
-                    if (j == 0) {
-                        f[i][j]++;
-                    } else {
-                        f[i][j] += f[i - 1][j - 1];
-                    }
+    public String reverseWords(String s) {
+        ArrayList<String> words = new ArrayList<String>();
+        String cached = "";
+        s += " ";
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == ' ') {
+                if (cached.length() > 0) {
+                    words.add(0, cached);
+                    cached = "";
                 }
+            } else {
+                cached += Character.toString(c);
             }
         }
 
-        return f[S.length() - 1][T.length() - 1];
+        String answer = "";
+        if (words.size() > 0) {
+            answer = words.get(0);
+            for (int i = 1; i < words.size(); i++) {
+                answer += " " + words.get(i);
+            }
+        }
+        return answer;
     }
 }
